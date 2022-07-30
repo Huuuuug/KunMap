@@ -44,10 +44,11 @@ const setCurrentMap = (ind: number) => {
   tianDiTu.theme = ind
 };
 
-const {municipalBoundary} = useBoundary()
+const {municipalBoundary,countyBoundary} = useBoundary()
 onMounted(() => {
   props.getMap().then(map => {
     tianDiTu = new TianDiTu(map,{theme:0})
+    countyBoundary.addTo(map)
     municipalBoundary.addTo(map)
   })
 })
