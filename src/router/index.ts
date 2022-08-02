@@ -7,9 +7,9 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/Index/index.vue"),
   },
   {
-    path: "/CasePerformance",
-    name: "CasePerformance",
-    component: () => import("../views/CasePerformance/index.vue"),
+    path: "/DisplayCase",
+    name: "DisplayCase",
+    component: () => import("../views/DisplayCase/index.vue"),
   },
 ];
 
