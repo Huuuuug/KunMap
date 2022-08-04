@@ -70,7 +70,12 @@ export default function () {
    * @param colors 控制点颜色
    * @returns 数据线和原点
    */
-  const createCable = (points: [number, number][], colors: string[]) => {
+  const createCable = (
+    points: [number, number][],
+    colors: string[],
+    onFocus: (i: number) => void,
+    onBlur: () => void
+  ) => {
     const group = new Group();
     for (let i = 0; i < 1; i += 0.1) {
       const a = 1 - i;
@@ -99,26 +104,40 @@ export default function () {
         new Circle({
           silent: true,
           shape: {
-            r: 6,
+            r: 5,
           },
           style: {
             fill: colors[i],
           },
         })
       );
-      pointGroup.add(
-        new Circle({
-          silent: true,
-          shape: {
-            r: 15,
-          },
+      const circle = new Circle({
+        shape: {
+          r: 10,
+        },
+        style: {
+          fill: "none",
+          stroke: "#396954",
+          lineWidth: 2,
+        },
+      });
+      circle.on("mouseover", () => {
+        onFocus(i);
+        circle.attr({
           style: {
-            fill: "none",
-            stroke: "#FFCC00",
-            lineWidth: 2,
+            stroke: colors[i],
           },
-        })
-      );
+        });
+      });
+      circle.on("mouseout", () => {
+        onBlur();
+        circle.attr({
+          style: {
+            stroke: "#FFCC00",
+          },
+        });
+      });
+      pointGroup.add(circle);
       pointGroup
         .animate("", false)
         .when(500, {

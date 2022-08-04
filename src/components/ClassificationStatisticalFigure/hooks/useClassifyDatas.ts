@@ -5,6 +5,7 @@ export interface ClassifyData {
 }
 
 export default function () {
+  /** 随机颜色 */
   const colors = [
     "#CCFF00",
     "#99FF00",
@@ -19,15 +20,14 @@ export default function () {
   ];
   /**
    * 随机生成指定数量的数据
-   * @param num 生成数据条数
    * @returns 测试数据
    */
-  const randomlyGenerateClassifyDatas = (num: number) => {
+  const randomlyGenerateClassifyDatas = (num: number, max: number) => {
     const res: ClassifyData[] = [];
     for (let i = 1; i <= num; i++) {
       res.push({
         name: "数据" + i,
-        value: Math.floor(Math.random() * 500),
+        value: Math.floor(Math.random() * max),
         color: colors[Math.floor(Math.random() * 10)],
       });
     }
