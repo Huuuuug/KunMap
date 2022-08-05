@@ -66,7 +66,7 @@ const onSwitchClick = () => {
 /** 当前轮换的对象 */
 const currentLoopData = ref<ClassifyData | null>(testDatas[0]);
 /** 轮换定时器 */
-let timer: number;
+let timer: any;
 
 /** 开始轮换 */
 const play = () => {
@@ -204,7 +204,7 @@ onBeforeUnmount(() => {
     }
   }
   .container {
-    width: 85%;
+    width: 100%;
     height: 100%;
     background-color: #f0f0f0;
   }

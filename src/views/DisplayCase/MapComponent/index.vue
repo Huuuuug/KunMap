@@ -39,8 +39,8 @@ onMounted(() => {
 </script>
 <style lang="less" scoped>
 .map {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: relative;
 }
 </style>
