@@ -34,6 +34,7 @@ export class KunMap {
   /** 全局根节点，通过平移缩放将内部坐标转化为伪墨卡托坐标  */
   /** 地图内部元素集合 */
   readonly elements = new Map<string, BasicElement>();
+  private _mapEventGroup : MapEventGroup
   readonly root = new Group();
   private _option: KunMapOption = {
     show: true,
@@ -171,5 +172,6 @@ export class KunMap {
   }
   handleMouseUp() {
     if (!this.show) return;
+    if(!this._mapGroup)
   }
 }

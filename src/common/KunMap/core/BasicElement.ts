@@ -25,7 +25,7 @@ export class BasicElement {
       }
     }
   }
-
+  /** 将元素添加到地图 */
   addTo(map: KunMap) {
     if (map === this._map) {
       return this;
@@ -38,7 +38,7 @@ export class BasicElement {
     this.onZoomEnd();
     return this;
   }
-
+  /** 从地图上移除实例 */
   remove() {
     if (this._map) {
       const map = this._map;

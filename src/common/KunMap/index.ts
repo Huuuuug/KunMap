@@ -4,3 +4,5 @@ registerPainter("canvas", CanvasPainter);
 
 export * from "./core/KunMap";
 export * from "./core/BasicElement";
+
+export * from "./core/elements/index";
