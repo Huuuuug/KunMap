@@ -6,7 +6,6 @@
 import { KunMap } from "@/common/KunMap/index";
 import { onMounted, ref } from "vue";
 import { Boundary } from "@/common/KunMap";
-import Hangzhou from "@/assets/geojson/hangzhou.json";
 import zhengzhou from "@/assets/geojson/zhengzhouCommunity.json";
 let map: KunMap;
 

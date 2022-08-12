@@ -50,18 +50,18 @@ export class BasicElement {
 
   /** 地图平移时的回调 */
   onMove() {
-    console.log("onMove");
+    // console.log("onMove");
   }
   /** 地图平移结束时的回调 */
   onMoveEnd() {
-    console.log("onMoveEnd");
+    // console.log("onMoveEnd");
   }
   /** 地图缩放开始时的回调 */
   onZoomStart() {
-    console.log("onZoomStart");
+    // console.log("onZoomStart");
   }
   /** 地图缩放结束时的回调 */
   onZoomEnd() {
-    console.log("onZoomEnd");
+    // console.log("onZoomEnd");
   }
 }

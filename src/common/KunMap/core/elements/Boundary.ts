@@ -141,7 +141,6 @@ export class Boundary extends BasicElement {
     } else {
       this.root.eachChild((e, i) => {
         const path = e as CompoundPath;
-        console.log(path.style.lineWidth);
         path.show();
         path.attr({
           style: {
