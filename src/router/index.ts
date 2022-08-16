@@ -30,6 +30,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import("../views/DisplayCase/DifferentColorLine/index.vue"),
       },
+      {
+        /** 不同颜色的线 */
+        path: "/Canvas",
+        component: () => import("../views/DisplayCase/Canvas/index.vue"),
+      },
     ],
   },
 ];

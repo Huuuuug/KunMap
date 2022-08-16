@@ -22,6 +22,9 @@
         <el-menu-item index="2-2" @click="$router.push('/DifferentColorLine')"
           >不同颜色的线</el-menu-item
         >
+        <el-menu-item index="2-3" @click="$router.push('/Canvas')"
+          >Canvas 测试</el-menu-item
+        >
       </el-sub-menu>
     </el-menu>
     <div class="display-container">
