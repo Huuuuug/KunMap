@@ -172,6 +172,16 @@ export class KunMap {
       Projection.yToLat(y / this.root.scaleY),
     ];
   }
+  /** 边界 */
+  get border() {
+    const { size, root } = this;
+    return {
+      east: Projection.xToLon((size.x - root.x) / root.scaleX),
+      west: Projection.xToLon(-root.x / root.scaleX),
+      south: Projection.yToLat((size.y - root.y) / root.scaleY),
+      north: Projection.yToLat(-root.y / root.scaleY),
+    };
+  }
   /**
    * 设置当前视图
    * @param lon 中心经度

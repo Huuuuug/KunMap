@@ -23,7 +23,7 @@ onMounted(() => {
   (window as any).map = map;
   const boundary = new Boundary("杭州").addTo(map);
   boundary.setBoundaryByGeoJosn(zhengzhou);
-  const grid = new Grid("格点");
+  const grid = new Grid("格点").addTo(map);
   grid.setGridByPNG(png);
 });
 </script>
