@@ -253,7 +253,7 @@ export class KunMap {
       document.removeEventListener("mouseup", this.handleMouseUp);
     }
     //** 鼠标抬起事件回调 */
-    // this.elements.forEach((e) => e.onMoveEnd);
+    this.elements.forEach((e) => e.onMoveEnd());
   }
   /** 鼠标滑轮事件 */
   handleMouseWheel(e: ElementEvent) {

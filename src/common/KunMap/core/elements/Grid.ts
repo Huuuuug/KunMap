@@ -110,9 +110,12 @@ export class Grid extends BasicElement {
             (size.x / this._option.space)
         ) < 1
           ? 1
-          : Math.round((max_i - min_i) / (size.x / this._option.space));
+          : Math.round(
+              (this.iToLon.backward(boundary.east) -
+                this.iToLon.backward(boundary.west)) /
+                (size.x / this._option.space)
+            );
       const offset = Math.round((width % step) / 2);
-      console.log(step);
 
       for (
         let j = Math.floor(min_j / step) * step + offset;
@@ -203,6 +206,11 @@ export class Grid extends BasicElement {
   /** 地图缩放重载 */
   onZoomEnd() {
     // 地图缩放重新绘制格点
+    this._drawGrid();
+  }
+  /** 移动回调 */
+  onMoveEnd() {
+    // 移动屏幕之后重绘
     this._drawGrid();
   }
 }
