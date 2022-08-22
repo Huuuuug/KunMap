@@ -45,9 +45,11 @@ import { Menu as IconMenu, Location } from "@element-plus/icons-vue";
   .el-menu-vertical-demo {
     width: 300px;
     height: 100%;
+    user-select: none;
   }
   .display-container {
     width: calc(100% - 300px);
+    height: 100%;
   }
 }
 </style>
