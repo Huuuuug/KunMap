@@ -51,13 +51,13 @@ onMounted(() => {
       keys: ["红点"],
       priority: 9,
     },
-    {
-      lon: 113.57893785906676,
-      lat: 34.65348124738536,
-      keys: ["蓝点"],
-      color: "#0099FF",
-      priority: 8,
-    },
+    // {
+    //   lon: 113.57893785906676,
+    //   lat: 34.65348124738536,
+    //   keys: ["蓝点"],
+    //   color: "#0099FF",
+    //   priority: 8,
+    // },
   ]);
   (window as any).points = points;
 });

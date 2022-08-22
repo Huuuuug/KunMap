@@ -71,6 +71,7 @@ export class Points extends BasicElement {
       if (e.lon < west || e.lon > east || e.lat < south || e.lat > north)
         return;
       if (e.keys?.some((e: string) => this._hiddenKeys.has(e))) return;
+      // 默认使用shape的位置给元素定位
       if (!e.position) {
         const box: { x: number; y: number } = e.shape!.getBoundingRect();
         e.position = {
@@ -78,26 +79,24 @@ export class Points extends BasicElement {
           y: box.y,
         };
       }
-      // if (activeDatas.length > 0) {
-      //   const isCrashed = activeDatas.some((p: Point) => {
-      //     const collisionX =
-      //       Math.abs(p.shape!.x - e.shape!.x) * 2 * map.root.scaleX;
-      //     const collisionY =
-      //       Math.abs(p.shape!.y - e.shape!.y) * 2 * map.root.scaleY;
-      //     if (
-      //       collisionX > Math.abs(p.position!.x) + Math.abs(e.position!.x) ||
-      //       collisionY > Math.abs(e.position!.y) + Math.abs(e.position!.y)
-      //     ) {
-      //       return false;
-      //     } else {
-      //       return true;
-      //     }
-      //   });
-      // }
-      console.log(e);
-
+      /** 检测碰撞 */
+      const isCrashed = activeDatas.some((p: Point) => {
+        const collisionX = Math.abs(p.shape!.x - e.shape!.x) * map.root.scaleX;
+        const collisionY = Math.abs(p.shape!.y - e.shape!.y) * map.root.scaleY;
+        if (
+          collisionX > Math.abs(p.position!.x) + Math.abs(e.position!.x) ||
+          collisionY > Math.abs(e.position!.y) + Math.abs(e.position!.y)
+        ) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      if (isCrashed) {
+        if (Number.isFinite(e.priority)) return;
+      }
       activeDatas.push(e);
-      console.log(activeDatas);
+      // console.log(JSON.parse(JSON.stringify(activeDatas)));
     });
     activeDatas.forEach((e: Point) => {
       this.root.add(e.shape!);
