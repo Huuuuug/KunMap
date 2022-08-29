@@ -5,9 +5,9 @@
 <script lang="ts" setup>
 import { KunMap } from "@/common/KunMap/index";
 import { onMounted, ref } from "vue";
-import { Boundary, Grid, Points } from "@/common/KunMap";
+import { Boundary, Grid, Points, EquivalentLine } from "@/common/KunMap";
 import zhengzhou from "@/assets/geojson/zhengzhouCommunity.json";
-import png from "@/assets/imgs/test.png";
+import png from "@/assets/imgs/rain.png";
 import { Circle } from "zrender";
 let map: KunMap;
 
@@ -21,10 +21,10 @@ onMounted(() => {
     backgroundColor: "#eee",
   });
   (window as any).map = map;
-  // const boundary = new Boundary("杭州").addTo(map);
-  // boundary.setBoundaryByGeoJosn(zhengzhou);
-  // const grid = new Grid("格点").addTo(map);
-  // grid.setGridByPNG(png);
+  const boundary = new Boundary("杭州").addTo(map);
+  boundary.setBoundaryByGeoJosn(zhengzhou);
+  const grid = new Grid("格点").addTo(map);
+  grid.setGridByPNG(png);
 
   const points = new Points("点").addTo(map);
   points.add([
@@ -51,15 +51,35 @@ onMounted(() => {
       keys: ["红点"],
       priority: 9,
     },
-    // {
-    //   lon: 113.57893785906676,
-    //   lat: 34.65348124738536,
-    //   keys: ["蓝点"],
-    //   color: "#0099FF",
-    //   priority: 8,
-    // },
+    {
+      lon: 113.57893785906676,
+      lat: 34.65348124738536,
+      keys: ["蓝点"],
+      color: "#0099FF",
+      priority: 8,
+    },
   ]);
-  (window as any).points = points;
+
+  /********************* 等值线 ********************* */
+  const legend: [number, string][] = [
+    [0.09, "#d4d5d4"],
+    [5, "#a5f38d"],
+    [10, "#3db93f"],
+    [15, "#00ecec"],
+    [20, "#01a0f6"],
+    [25, "#0d41f9"],
+    [30, "#ffff00"],
+    [35, "#e7c000"],
+    [40, "#ff9000"],
+    [45, "#ff0000"],
+    [50, "#c00000"],
+    [60, "#ff00f0"],
+    [70, "#780084"],
+    [80, "#ad92f7"],
+  ];
+  const equivalentLine = new EquivalentLine("等值线", { grid, legend }).addTo(
+    map
+  );
 });
 </script>
 <style lang="less" scoped>

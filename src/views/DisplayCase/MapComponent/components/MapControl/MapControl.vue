@@ -1,5 +1,9 @@
 <template>
-  <div class="map-control" @mouseenter="isMouseIn = true" @mouseleave="isMouseIn = false">
+  <div
+    class="map-control"
+    @mouseenter="isMouseIn = true"
+    @mouseleave="isMouseIn = false"
+  >
     <img
       v-for="(img, ind) in mapTypeImgs"
       v-show="currentActiveMap === ind || isMouseIn"
