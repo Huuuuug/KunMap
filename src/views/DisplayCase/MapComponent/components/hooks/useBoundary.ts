@@ -1,6 +1,5 @@
 import HangZhouMunicipal from "@/assets/geojson/hangzhou.json";
 import HangZhouCounty from "@/assets/geojson/hangzhouCounty.json";
-import ShanTou from "@/assets/geojson/shantou.json";
 
 import { GeoJSON } from "leaflet";
 
@@ -19,16 +18,9 @@ export const useBoundary = () => {
       fillOpacity: 0,
     },
   });
-  /** 汕头市边界 */
-  const shantou = new GeoJSON(ShanTou, {
-    style: {
-      color: "#242424",
-      fillOpacity: 0,
-    },
-  });
+
   return {
     municipalBoundary,
     countyBoundary,
-    shantou,
   };
 };

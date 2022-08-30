@@ -11,11 +11,11 @@ export class OneDimensional {
     this.k = (to[1] - to[0]) / d;
     this.b = (to[0] * from[1] - to[1] * from[0]) / d;
   }
-  /** 从坐标映射到经纬度 */
+  /** 从from映射到to */
   forward(x: number) {
     return this.k * x + this.b;
   }
-  /** 从经纬度映射到坐标 */
+  /** 从to映射到from */
   backward(y: number) {
     return (y - this.b) / this.k;
   }

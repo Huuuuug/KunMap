@@ -203,6 +203,22 @@ export class Grid extends BasicElement {
       this._drawGrid();
     }
   }
+  /**
+   * 通过点获取格点值
+   * @param point 经纬度
+   * @returns 格点值
+   */
+  async getGridValue(point: [number, number]) {
+    console.log(this.data);
+
+    if (this.columns) {
+      const { data } = this;
+      const i = this.iToLon.backward(point[0]);
+      const j = this.jToLat.backward(point[1]);
+      console.log(i, j);
+    }
+  }
+
   /** 地图缩放重载 */
   onZoomEnd() {
     // 地图缩放重新绘制格点

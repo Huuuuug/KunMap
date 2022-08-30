@@ -7,6 +7,7 @@ import { KunMap } from "@/common/KunMap/index";
 import { onMounted, ref } from "vue";
 import { Boundary, Grid, Points, EquivalentLine } from "@/common/KunMap";
 import zhengzhou from "@/assets/geojson/zhengzhouCommunity.json";
+import Line from "@/assets/geojson/test.json";
 import png from "@/assets/imgs/rain.png";
 import { Circle } from "zrender";
 let map: KunMap;
@@ -80,6 +81,7 @@ onMounted(() => {
   const equivalentLine = new EquivalentLine("等值线", { grid, legend }).addTo(
     map
   );
+  equivalentLine.drawLineByGeoJson(Line);
 });
 </script>
 <style lang="less" scoped>
