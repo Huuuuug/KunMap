@@ -47,11 +47,11 @@ export class Grid extends BasicElement {
   data: number[][] = [];
   /** 格点行数 */
   get rows() {
-    return this.data[0].length;
+    return this.data.length;
   }
   /** 格点列数 */
   get columns() {
-    return this.data.length;
+    return this.data.length && this.data[0].length;
   }
   /** 裁剪边界缓存 */
   private _clipInfo: boolean[][] = [];
@@ -100,9 +100,9 @@ export class Grid extends BasicElement {
       const size = map.size;
       const boundary = map.border;
       const min_i = Math.max(0, this.iToLon.backward(boundary.west));
-      const max_i = Math.min(width - 1, this.iToLon.backward(boundary.east));
+      const max_i = Math.min(height - 1, this.iToLon.backward(boundary.east));
       const min_j = Math.max(0, this.jToLat.backward(boundary.south));
-      const max_j = Math.min(height - 1, this.jToLat.backward(boundary.north));
+      const max_j = Math.min(width - 1, this.jToLat.backward(boundary.north));
       const step =
         Math.round(
           (this.iToLon.backward(boundary.east) -
@@ -115,7 +115,7 @@ export class Grid extends BasicElement {
                 this.iToLon.backward(boundary.west)) /
                 (size.x / this._option.space)
             );
-      const offset = Math.round((width % step) / 2);
+      const offset = Math.round((height % step) / 2);
 
       for (
         let j = Math.floor(min_j / step) * step + offset;
@@ -196,26 +196,51 @@ export class Grid extends BasicElement {
       this.data = [];
     }
     this._max = undefined;
-    this.event.trigger("change");
     if (this._option.clip) {
       this._updateClip();
     } else {
       this._drawGrid();
     }
+    this.event.trigger("change");
   }
   /**
    * 通过点获取格点值
    * @param point 经纬度
    * @returns 格点值
    */
-  async getGridValue(point: [number, number]) {
-    console.log(this.data);
-
-    if (this.columns) {
+  getGridValue(point: [number, number]) {
+    if (this.rows) {
       const { data } = this;
       const i = this.iToLon.backward(point[0]);
       const j = this.jToLat.backward(point[1]);
-      console.log(i, j);
+      const i0 = Math.floor(i);
+      const j0 = Math.floor(j);
+      const i1 = i0 + 1;
+      const j1 = j0 + 1;
+      if (i0 < 0 || j0 < 0 || i1 > this.columns - 1 || j1 > this.rows - 1) {
+        return false;
+      }
+      if (this._option.clip) {
+        if (
+          !this._clipInfo[j0][i0] &&
+          !this._clipInfo[j0][i1] &&
+          !this._clipInfo[j1][i0] &&
+          !this._clipInfo[j1][i1]
+        ) {
+          return false;
+        }
+      }
+      const v0 = new OneDimensional(
+        [i0, i1],
+        [data[j0][i0], data[j0][i1]]
+      ).forward(i);
+      const v1 = new OneDimensional(
+        [i0, i1],
+        [data[j1][i0], data[j1][i1]]
+      ).forward(i);
+      return new OneDimensional([j0, j1], [v0, v1]).forward(j);
+    } else {
+      return false;
     }
   }
 
