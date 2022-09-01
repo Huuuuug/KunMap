@@ -96,7 +96,6 @@ export class Points extends BasicElement {
         if (Number.isFinite(e.priority)) return;
       }
       activeDatas.push(e);
-      // console.log(JSON.parse(JSON.stringify(activeDatas)));
     });
     activeDatas.forEach((e: Point) => {
       this.root.add(e.shape!);
