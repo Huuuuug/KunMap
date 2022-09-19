@@ -44,7 +44,7 @@ function drawCoordinate(ctx: CanvasRenderingContext2D) {
   const origin = { x: space, y: canvasHeight - space };
   console.log(origin);
 
-  const orignDotSize = 10;
+  // const orignDotSize = 10;
   // ctx.moveTo(origin.x - orignDotSize / 2, origin.y - orignDotSize / 2);
   // ctx.lineTo(origin.x - orignDotSize / 2, origin.y + orignDotSize / 2);
   // ctx.lineTo(origin.x + orignDotSize / 2, origin.y + orignDotSize / 2);
