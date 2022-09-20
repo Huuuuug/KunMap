@@ -1,18 +1,42 @@
 <template>
   <div class="map" ref="refMap"></div>
+  <div class="btn-box">
+    <div class="btn" @click="isRoadVisiable = !isRoadVisiable">显示道路</div>
+    <!-- <div class="btn" @click="isRoadVisiable = !isRoadVisiable">显示等值线</div> -->
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { KunMap } from "@/common/KunMap/index";
-import { onMounted, ref } from "vue";
-import { Boundary, Grid, Points, EquivalentLine } from "@/common/KunMap";
+import { onMounted, ref, watch } from "vue";
+import {
+  Boundary,
+  Grid,
+  Points,
+  EquivalentLine,
+  Isosurface,
+} from "@/common/KunMap";
 import zhengzhou from "@/assets/geojson/zhengzhouCommunity.json";
 import Line from "@/assets/geojson/line.json";
 import png from "@/assets/imgs/rain.png";
 import { Circle } from "zrender";
 let map: KunMap;
+let equivalentLine: EquivalentLine;
+let isosurface: Isosurface;
 
 const refMap = ref<HTMLDivElement | null>();
+
+/********** 道路 *********** */
+const isRoadVisiable = ref(false);
+watch(isRoadVisiable, (val) => {
+  if (val) {
+    equivalentLine.drawLineByGeoJson(Line);
+  } else {
+    equivalentLine.drawLineByGeoJson();
+  }
+});
+/*************** 等值面 *************** */
+
 onMounted(() => {
   map = new KunMap(refMap.value!, {
     center: [113.46553785906676, 34.65348124738536],
@@ -22,9 +46,9 @@ onMounted(() => {
     backgroundColor: "#eee",
   });
   (window as any).map = map;
-  const boundary = new Boundary("杭州").addTo(map);
+  const boundary = new Boundary("浙江").addTo(map);
   boundary.setBoundaryByGeoJosn(zhengzhou);
-  const grid = new Grid("格点").addTo(map);
+  const grid = new Grid("格点", { clip: boundary }).addTo(map);
   grid.setGridByPNG(png);
 
   const points = new Points("点").addTo(map);
@@ -61,7 +85,7 @@ onMounted(() => {
     },
   ]);
 
-  /********************* 等值线 ********************* */
+  /********************* 道路等值线 ********************* */
   const legend: [number, string][] = [
     [0.09, "#d4d5d4"],
     [5, "#a5f38d"],
@@ -78,17 +102,52 @@ onMounted(() => {
     [70, "#780084"],
     [80, "#ad92f7"],
   ];
-  const equivalentLine = new EquivalentLine("等值线", { grid, legend }).addTo(
-    map
-  );
-  equivalentLine.drawLineByGeoJson(Line);
-  // setTimeout(() => {
-  // }, 1);
+  equivalentLine = new EquivalentLine("道路等值线", {
+    grid,
+    legend,
+  }).addTo(map);
+  /********************* 等值mian ********************* */
+  isosurface = new Isosurface("等值面", {
+    grid,
+    legend: [
+      [0.09, "#d4d5d4"],
+      [1, "#a5f38d"],
+      [5, "#3db93f"],
+      [10, "#00ecec"],
+      [15, "#01a0f6"],
+      [20, "#0d41f9"],
+      [25, "#ffff00"],
+      [30, "#e7c000"],
+      [35, "#ff9000"],
+      [40, "#ff0000"],
+      [45, "#c00000"],
+      [50, "#ff00f0"],
+      [60, "#780084"],
+      [70, "#ad92f7"],
+    ],
+  });
+  isosurface.addTo(map);
 });
 </script>
 <style lang="less" scoped>
 .map {
   width: 100%;
   height: 100%;
+}
+.btn-box {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  .btn {
+    background-color: chocolate;
+    color: #fff;
+    padding: 7px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .btn:not(:first-child) {
+    margin-top: 15px;
+  }
 }
 </style>

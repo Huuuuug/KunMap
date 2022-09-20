@@ -3,3 +3,4 @@ export * from "./Grid";
 export * from "./Points";
 export * from "./EquivalentLine";
 export * from "./RouteProfile";
+export * from "./Isosurface";

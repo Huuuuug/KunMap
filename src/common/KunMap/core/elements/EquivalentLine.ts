@@ -96,34 +96,39 @@ export class EquivalentLine extends BasicElement {
       this.drawLineByGeoJson(this._geojson);
     });
   }
+
   /** 绘制等值线 */
-  drawLineByGeoJson(geojson: GeoJSON) {
+  drawLineByGeoJson(geojson?: GeoJSON) {
     this._geojson = geojson;
     this._linePath.clear();
     this._width_zoom.clear();
     this.root.removeAll();
-    if (geojson.type === "FeatureCollection") {
-      geojson.features.forEach((e: Feature) => {
-        // 记录线宽与地图缩放映射
-        const w_zoom = this._width_zoom.get(e.properties!.width);
-        if (!w_zoom) {
-          this._width_zoom.set(e.properties!.width, e.properties!.zoom);
-        }
-        switch (e.geometry.type) {
-          case "MultiLineString":
-            e.geometry.coordinates.forEach((line: Position[]) => {
-              this._dealLine(line, e.properties);
-            });
-            break;
-          case "LineString":
-            this._dealLine(e.geometry.coordinates, e.properties);
-            break;
-          default:
-            throw new Error("geojson格式有误");
-        }
-      });
+    if (geojson) {
+      if (geojson.type === "FeatureCollection") {
+        geojson.features.forEach((e: Feature) => {
+          // 记录线宽与地图缩放映射
+          const w_zoom = this._width_zoom.get(e.properties!.width);
+          if (!w_zoom) {
+            this._width_zoom.set(e.properties!.width, e.properties!.zoom);
+          }
+          switch (e.geometry.type) {
+            case "MultiLineString":
+              e.geometry.coordinates.forEach((line: Position[]) => {
+                this._dealLine(line, e.properties);
+              });
+              break;
+            case "LineString":
+              this._dealLine(e.geometry.coordinates, e.properties);
+              break;
+            default:
+              throw new Error("geojson格式有误");
+          }
+        });
+      }
     }
+
     this.onZoomEnd();
+    // this.root.dirty();
     this._linePath.forEach((path: CompoundPath) => {
       this.root.add(path);
     });
@@ -137,6 +142,7 @@ export class EquivalentLine extends BasicElement {
         const z_width = this._width_zoom.get(
           Number.parseFloat(key.split("-")[0])
         );
+
         if (z_width) {
           z_width > zoom ? path.hide() : path.show();
         }

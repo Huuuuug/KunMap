@@ -53,13 +53,29 @@ export class Grid extends BasicElement {
   get columns() {
     return this.data.length && this.data[0].length;
   }
+  /** 东边界 */
+  get east() {
+    return this.iToLon.forward(this.columns - 0.5);
+  }
+  /** 西边界 */
+  get west() {
+    return this.iToLon.forward(-0.5);
+  }
+  /** 北边界 */
+  get north() {
+    return this.jToLat.forward(this.rows - 0.5);
+  }
+  /** 南边界 */
+  get south() {
+    return this.jToLat.forward(-0.5);
+  }
   /** 裁剪边界缓存 */
   private _clipInfo: boolean[][] = [];
   /** 裁剪网格 */
   private _updateClip() {
     if (this._clipInfo.length > 0) this._clipInfo = [];
     if (this._option.clip && this._option.clip.paths.length > 0) {
-      const { rows: width, columns: height } = this;
+      const { rows: height, columns: width } = this;
       const canvas = document.createElement("canvas");
       canvas.width = width;
       canvas.height = height;
