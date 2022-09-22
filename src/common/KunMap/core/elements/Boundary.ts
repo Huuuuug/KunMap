@@ -16,9 +16,9 @@ export interface BoundaryOption {
 }
 
 export class Boundary extends BasicElement {
-  // event = new Eventful<{
-  //   change: () => void;
-  // }>();
+  event = new Eventful<{
+    change: () => void;
+  }>();
   private _option: BoundaryOption = {
     minZoomLevel: 0,
     maxZoomLevel: 18,
@@ -128,7 +128,7 @@ export class Boundary extends BasicElement {
         throw new Error(`TODO ${geo.type} 待完成`);
     }
     if (this._map) this.onZoomEnd();
-    // this.event.trigger("change");
+    this.event.trigger("change");
     return this;
   }
   onZoomEnd() {

@@ -45,6 +45,9 @@ export class Grid extends BasicElement {
   jToLat = new OneDimensional([0, 1]);
   /** 格点数据 */
   data: number[][] = [];
+  get clip() {
+    return this._option.clip;
+  }
   /** 格点行数 */
   get rows() {
     return this.data.length;

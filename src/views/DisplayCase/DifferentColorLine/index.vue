@@ -110,7 +110,7 @@ onMounted(() => {
   isosurface = new Isosurface("等值面", {
     grid,
     legend: [
-      [0.09, "#d4d5d4"],
+      [-1, "#0d41f9"],
       [1, "#a5f38d"],
       [5, "#3db93f"],
       [10, "#00ecec"],
