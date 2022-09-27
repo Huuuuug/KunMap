@@ -40,6 +40,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/Zrender",
         component: () => import("../views/DisplayCase/Zrender/index.vue"),
       },
+      {
+        /** Three */
+        path: "/Three",
+        component: () => import("../views/DisplayCase/Three/index.vue"),
+      },
     ],
   },
 ];

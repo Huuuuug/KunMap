@@ -28,6 +28,9 @@
         <el-menu-item index="2-4" @click="$router.push('/Zrender')"
           >Zrender 测试</el-menu-item
         >
+        <el-menu-item index="2-5" @click="$router.push('/Three')"
+          >Three</el-menu-item
+        >
       </el-sub-menu>
     </el-menu>
     <div class="display-container">
